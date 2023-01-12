@@ -53,6 +53,11 @@ The dataset will be downloaded automatically if it is not present in the `data` 
 
 If you want to visualize and plot the training process, you need to uncomment the last statement in the `main()` function in `main.py`. This will plot the training process and save the plot as `plot.png`.
 
+```python
+    # Save the plot
+    # plot(r1, r2, filename="plot")
+```
+
 ## Documentation
 
 You can find the main documentation in the [docs](docs) folder. Here, you can find documentation on how the neural network works and how the training process is implemented.
