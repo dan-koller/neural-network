@@ -99,6 +99,20 @@ class OneLayerNeural:
         self.b -= alpha * delta_b
 
 
+def train(model, X, y, alpha, batch_size=100):
+    # Perform a single epoch of training
+    n = X.shape[0]
+    for i in range(0, n, batch_size):
+        model.backprop(X[i:i + batch_size], y[i:i + batch_size], alpha)
+
+
+def accuracy(model, X, y):
+    # Calculate the accuracy of the model
+    y_pred = np.argmax(model.forward(X), axis=1)
+    y_true = np.argmax(y, axis=1)
+    return np.mean(y_pred == y_true)
+
+
 if __name__ == '__main__':
 
     if not os.path.exists('../Data'):
@@ -135,21 +149,17 @@ if __name__ == '__main__':
     # Create a class instance and train it
     model = OneLayerNeural(X_train.shape[1], 10)
 
-    # Perform a backward step (train the model)
-    model.backprop(X_train[:2], y_train[:2], 0.1)
+    # Test the accuracy
+    r1 = accuracy(model, X_test, y_test).flatten().tolist()
 
-    # Second step: Implement the forward step
-    y_pred = model.forward(X_train[:2])
-
-    # Use the [−1,0,1,2] and [4,3,2,1] arrays to test your MSE and the MSE derivative functions
-    a1 = np.array([-1, 0, 1, 2])
-    a2 = np.array([4, 3, 2, 1])
-
-    # Calculate the mean squared error and the derivative of the mean squared error
-    r1 = mse(a1, a2).flatten().tolist()
-    r2 = mse_prime(a1, a2).flatten().tolist()
-    r3 = sigmoid_prime(a1).flatten().tolist()
-    r4 = mse(y_pred, y_train[:2]).flatten().tolist()
+    # Train the model (20 epochs)
+    r2 = []
+    for _ in range(20):
+        train(model, X_train, y_train, 0.5)
+        r2.append(accuracy(model, X_test, y_test))
 
     # Print the result of the model
-    print(r1, r2, r3, r4)
+    print(r1, r2)
+
+    # Save the plot
+    # plot(r1, r2, filename="plot")
