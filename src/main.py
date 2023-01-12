@@ -192,14 +192,11 @@ if __name__ == '__main__':
     # Create a class instance and train it
     model = TwoLayerNeural(n_features, n_classes)
 
-    # Perform a backward step
-    model.backprop(X_train[:2], y_train[:2], 0.1)
+    # Train the model (20 epochs)
+    r1 = []
+    for i in range(20):
+        train(model, X_train, y_train, alpha=0.5)
+        r1.append(accuracy(model, X_train, y_train))
 
-    # Perform a forward step
-    y_pred = model.forward(X_train[:2])
-
-    # Calculate the MSE
-    r1 = mse(y_pred, y_train[:2]).flatten().tolist()
-
-    # Print the result
+    # Print the results
     print(r1)
