@@ -51,12 +51,7 @@ The dataset will be downloaded automatically if it is not present in the `data` 
 
 \*Fashion-MNIST is a dataset of Zalando's article images - consisting of a training set of 60,000 examples and a test set of 10,000 examples. Each example is a 28x28 grayscale image, associated with a label from 10 classes. We use it here as a drop-in replacement for the classic MNIST dataset - often used as the "Hello, World" of machine learning programs for computer vision. You can learn more about Fashion-MNIST [here](https://en.wikipedia.org/wiki/Fashion_MNIST).
 
-If you want to visualize and plot the training process, you need to uncomment the last statement in the `main()` function in `main.py`. This will plot the training process and save the plot as `plot.png`.
-
-```python
-    # Save the plot
-    # plot(r1, r2, filename="plot")
-```
+If you want to visualize and plot the training process, you can call the `plot()` function in the `main.py` file. This will create a `.png` file.
 
 ## Documentation
 
