@@ -113,6 +113,24 @@ def accuracy(model, X, y):
     return np.mean(y_pred == y_true)
 
 
+class TwoLayerNeural:
+    def __init__(self, n_features, n_classes):
+        # Size of the hidden layer (64 neurons)
+        hidden_size = 64
+
+        # Initiate weights and biases using Xavier initialization
+        self.W = [xavier(n_features, hidden_size),
+                  xavier(hidden_size, n_classes)]
+        self.b = [xavier(1, hidden_size), xavier(1, n_classes)]
+
+    def forward(self, X):
+        # Calculate feedforward step
+        z = X
+        for i in range(2):
+            z = sigmoid(np.dot(z, self.W[i]) + self.b[i])
+        return z
+
+
 if __name__ == '__main__':
 
     if not os.path.exists('../Data'):
@@ -145,21 +163,14 @@ if __name__ == '__main__':
 
     # First step: Rescale the data
     X_train, X_test = scale(X_train, X_test)
+    n_features = X_train.shape[1]
+    n_classes = y_train.shape[1]
 
     # Create a class instance and train it
-    model = OneLayerNeural(X_train.shape[1], 10)
+    model = TwoLayerNeural(n_features, n_classes)
 
-    # Test the accuracy
-    r1 = accuracy(model, X_test, y_test).flatten().tolist()
+    # Train the model
+    r1 = model.forward(X_train[:2]).flatten().tolist()
 
-    # Train the model (20 epochs)
-    r2 = []
-    for _ in range(20):
-        train(model, X_train, y_train, 0.5)
-        r2.append(accuracy(model, X_test, y_test))
-
-    # Print the result of the model
-    print(r1, r2)
-
-    # Save the plot
-    # plot(r1, r2, filename="plot")
+    # Print the result
+    print(r1)
