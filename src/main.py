@@ -59,6 +59,21 @@ def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
 
+def sigmoid_prime(x):
+    # Calculate the derivative of the sigmoid function
+    return sigmoid(x) * (1 - sigmoid(x))
+
+
+def mse(y_pred, y_true):
+    # Calculate the mean squared error
+    return np.mean((y_pred - y_true) ** 2)
+
+
+def mse_prime(y_pred, y_true):
+    # Calculate the derivative of the mean squared error
+    return 2 * (y_pred - y_true)
+
+
 class OneLayerNeural:
     def __init__(self, n_features, n_classes):
         # Initiate weights and biases using Xavier initialization
@@ -68,6 +83,20 @@ class OneLayerNeural:
     def forward(self, X):
         # Perform a forward step
         return sigmoid(np.dot(X, self.W) + self.b)
+
+    def backprop(self, X, y, alpha):
+        # Perform a backward step
+        # Calculate the error
+        error = (mse_prime(self.forward(X), y) *
+                 sigmoid_prime(np.dot(X, self.W) + self.b))
+
+        # Calculate the gradient
+        delta_W = (np.dot(X.T, error)) / X.shape[0]
+        delta_b = np.mean(error, axis=0)
+
+        # Update weights and biases
+        self.W -= alpha * delta_W
+        self.b -= alpha * delta_b
 
 
 if __name__ == '__main__':
@@ -103,12 +132,24 @@ if __name__ == '__main__':
     # First step: Rescale the data
     X_train, X_test = scale(X_train, X_test)
 
-    # Create a class instance with the number of input neurons equal to the number of features and the number of
-    # output neurons equal to the number of classes (10)
+    # Create a class instance and train it
     model = OneLayerNeural(X_train.shape[1], 10)
 
-    # Perform a forward step (apply the model to the data)
-    res = model.forward(X_train[:2])
+    # Perform a backward step (train the model)
+    model.backprop(X_train[:2], y_train[:2], 0.1)
 
-    # Print the result of the model’s feedforward for the first two items of the training dataset.
-    print(res.flatten().tolist())
+    # Second step: Implement the forward step
+    y_pred = model.forward(X_train[:2])
+
+    # Use the [−1,0,1,2] and [4,3,2,1] arrays to test your MSE and the MSE derivative functions
+    a1 = np.array([-1, 0, 1, 2])
+    a2 = np.array([4, 3, 2, 1])
+
+    # Calculate the mean squared error and the derivative of the mean squared error
+    r1 = mse(a1, a2).flatten().tolist()
+    r2 = mse_prime(a1, a2).flatten().tolist()
+    r3 = sigmoid_prime(a1).flatten().tolist()
+    r4 = mse(y_pred, y_train[:2]).flatten().tolist()
+
+    # Print the result of the model
+    print(r1, r2, r3, r4)
