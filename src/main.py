@@ -59,6 +59,17 @@ def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
 
+class OneLayerNeural:
+    def __init__(self, n_features, n_classes):
+        # Initiate weights and biases using Xavier initialization
+        self.W = xavier(n_features, n_classes)
+        self.b = xavier(1, n_classes)
+
+    def forward(self, X):
+        # Perform a forward step
+        return sigmoid(np.dot(X, self.W) + self.b)
+
+
 if __name__ == '__main__':
 
     if not os.path.exists('../Data'):
@@ -89,12 +100,15 @@ if __name__ == '__main__':
     y_train = one_hot(raw_train['label'].values)
     y_test = one_hot(raw_test['label'].values)
 
-    # write your code here
     # First step: Rescale the data
     X_train, X_test = scale(X_train, X_test)
 
-    r1 = [X_train[2, 778], X_test[0, 774]]
-    r2 = xavier(2, 3).flatten().tolist()
-    r3 = sigmoid(np.array([-1, 0, 1, 2])).flatten().tolist()
-    # Print results
-    print(r1, r2, r3)
+    # Create a class instance with the number of input neurons equal to the number of features and the number of
+    # output neurons equal to the number of classes (10)
+    model = OneLayerNeural(X_train.shape[1], 10)
+
+    # Perform a forward step (apply the model to the data)
+    res = model.forward(X_train[:2])
+
+    # Print the result of the model’s feedforward for the first two items of the training dataset.
+    print(res.flatten().tolist())
