@@ -94,7 +94,7 @@ class OneLayerNeural:
         delta_W = (np.dot(X.T, error)) / X.shape[0]
         delta_b = np.mean(error, axis=0)
 
-        # Update weights and biases
+        # Update weight and bias
         self.W -= alpha * delta_W
         self.b -= alpha * delta_b
 
@@ -129,6 +129,29 @@ class TwoLayerNeural:
         for i in range(2):
             z = sigmoid(np.dot(z, self.W[i]) + self.b[i])
         return z
+
+    def backprop(self, X, y, alpha):
+        n = X.shape[0]  # Number of trained samples
+        biases = np.ones((1, n))  # Vector of ones for bias calculation
+
+        # Calculate the output of the network
+        yp = self.forward(X)
+
+        # Calculate the gradient of the loss function with respect to the bias of the output layer
+        loss_grad_1 = 2 * alpha / n * ((yp - y) * yp * (1 - yp))
+
+        # Calculate the output of the first layer
+        f1_out = sigmoid(np.dot(X, self.W[0]) + self.b[0])
+
+        # Calculate the gradient of the loss function with respect to the bias of the first layer
+        loss_grad_0 = np.dot(loss_grad_1, self.W[1].T) * f1_out * (1 - f1_out)
+
+        # Update weights and biases
+        self.W[0] -= np.dot(X.T, loss_grad_0)
+        self.W[1] -= np.dot(f1_out.T, loss_grad_1)
+
+        self.b[0] -= np.dot(biases, loss_grad_0)
+        self.b[1] -= np.dot(biases, loss_grad_1)
 
 
 if __name__ == '__main__':
@@ -169,8 +192,14 @@ if __name__ == '__main__':
     # Create a class instance and train it
     model = TwoLayerNeural(n_features, n_classes)
 
-    # Train the model
-    r1 = model.forward(X_train[:2]).flatten().tolist()
+    # Perform a backward step
+    model.backprop(X_train[:2], y_train[:2], 0.1)
+
+    # Perform a forward step
+    y_pred = model.forward(X_train[:2])
+
+    # Calculate the MSE
+    r1 = mse(y_pred, y_train[:2]).flatten().tolist()
 
     # Print the result
     print(r1)
