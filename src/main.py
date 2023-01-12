@@ -200,3 +200,6 @@ if __name__ == '__main__':
 
     # Print the results
     print(r1)
+
+    # Save the plot
+    # plot(r1, r2, filename="plot")
