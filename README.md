@@ -1,6 +1,6 @@
 # Python Neural Network
 
-This is a simple but fully connected neural network with two layers built from scratch. The dataset for this project is 'Fashion-MNIST'. The script will feedforward networks and implement backpropagation and weight initialization. The is also a training loop and visualization of the model's training process.
+This is a simple but fully connected neural network with two layers built from scratch. The dataset for this project is 'Fashion-MNIST'. The script will feedforward networks and implement backpropagation and weight initialization. There is also a training loop and visualization of the model's training process.
 
 I built this project in order you get a solid knowledge of how neural networks work. I hope you enjoy it! The idea is based on a [JetBrains Academy](https://hyperskill.org/projects/250) project.
 
