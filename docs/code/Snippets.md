@@ -52,22 +52,6 @@ The forward() method is used to calculate the output of the neural network using
 
 The backprop() method is used to calculate the gradient of the loss function using the mse_prime() and sigmoid_prime() methods. After that, the gradient is calculated as delta_W for the weights and delta_b for the bias. The weights and bias are updated using the learning rate (alpha).
 
-## train()
-
-The train() method is used to train the neural network.
-
-```python
-    n = X.shape[0]
-    for i in range(0, n, batch_size):
-        model.backprop(X[i:i + batch_size], y[i:i + batch_size], alpha)
-```
-
-At first we get the size of the data (n). Then we iterate over the data in batches of size batch_size. For each batch, we call the backprop() method to calculate the gradient of the loss function. After that, the weights and bias are updated using the learning rate (alpha).
-
-## accuracy()
-
-The accuracy() method is used to calculate the accuracy of the neural network using the equation from the [documentation](docs/model/Equations.md#accuracy).
-
 ## class TwoLayerNeural
 
 This class represents the second layer of the network. It seems quite similar to the first layer at first glance, but differs in its inner workings. It contains the following methods:
@@ -126,6 +110,22 @@ The backpropagation process in this layer is a bit more complex than the first l
         self.b[0] -= np.dot(biases, loss_grad_0)
         self.b[1] -= np.dot(biases, loss_grad_1)
     ```
+
+## train()
+
+The train() method is used to train the neural network.
+
+```python
+    n = X.shape[0]
+    for i in range(0, n, batch_size):
+        model.backprop(X[i:i + batch_size], y[i:i + batch_size], alpha)
+```
+
+At first we get the size of the data (n). Then we iterate over the data in batches of size batch_size. For each batch, we call the backprop() method to calculate the gradient of the loss function. After that, the weights and bias are updated using the learning rate (alpha).
+
+## accuracy()
+
+The accuracy() method is used to calculate the accuracy of the neural network using the equation from the [documentation](docs/model/Equations.md#accuracy).
 
 ## main()
 
