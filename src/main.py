@@ -1,8 +1,11 @@
+from typing import Tuple
+
 import numpy as np
 import pandas as pd
 import os
 import requests
 from matplotlib import pyplot as plt
+from numpy import ndarray
 
 
 def one_hot(data: np.ndarray) -> np.ndarray:
