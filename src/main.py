@@ -39,7 +39,7 @@ def plot(loss_history: list, accuracy_history: list, filename='plot'):
     plt.savefig(f'{filename}.png')
 
 
-def scale(X_train, X_test):
+def scale(X_train: np.ndarray, X_test: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     # Rescale the data since neural networks don't like big numbers
     X_max = np.max(X_train)
     X_train = X_train / X_max
@@ -47,44 +47,44 @@ def scale(X_train, X_test):
     return X_train, X_test
 
 
-def xavier(n_in, n_out):
+def xavier(n_in: int, n_out: int) -> np.ndarray:
     # Xavier initialization
     low = -np.sqrt(6 / (n_in + n_out))
     high = np.sqrt(6 / (n_in + n_out))
     return np.random.uniform(low, high, (n_in, n_out))
 
 
-def sigmoid(x):
+def sigmoid(x: int or float or np.ndarray) -> float or np.ndarray:
     # Calculate the sigmoid function
     return 1 / (1 + np.exp(-x))
 
 
-def sigmoid_prime(x):
+def sigmoid_prime(x: int or float or np.ndarray) -> float or np.ndarray:
     # Calculate the derivative of the sigmoid function
     return sigmoid(x) * (1 - sigmoid(x))
 
 
-def mse(y_pred, y_true):
+def mse(y_pred: np.ndarray, y_true: np.ndarray) -> ndarray:
     # Calculate the mean squared error
     return np.mean((y_pred - y_true) ** 2)
 
 
-def mse_prime(y_pred, y_true):
+def mse_prime(y_pred: np.ndarray, y_true: np.ndarray) -> np.ndarray:
     # Calculate the derivative of the mean squared error
     return 2 * (y_pred - y_true)
 
 
 class OneLayerNeural:
-    def __init__(self, n_features, n_classes):
+    def __init__(self, n_features: int, n_classes: int):
         # Initiate weights and biases using Xavier initialization
         self.W = xavier(n_features, n_classes)
         self.b = xavier(1, n_classes)
 
-    def forward(self, X):
+    def forward(self, X: np.ndarray) -> np.ndarray:
         # Perform a forward step
         return sigmoid(np.dot(X, self.W) + self.b)
 
-    def backprop(self, X, y, alpha):
+    def backprop(self, X: np.ndarray, y: np.ndarray, alpha: float):
         # Perform a backward step
         # Calculate the error
         error = (mse_prime(self.forward(X), y) *
@@ -97,20 +97,6 @@ class OneLayerNeural:
         # Update weight and bias
         self.W -= alpha * delta_W
         self.b -= alpha * delta_b
-
-
-def train(model, X, y, alpha, batch_size=100):
-    # Perform a single epoch of training
-    n = X.shape[0]
-    for i in range(0, n, batch_size):
-        model.backprop(X[i:i + batch_size], y[i:i + batch_size], alpha)
-
-
-def accuracy(model, X, y):
-    # Calculate the accuracy of the model
-    y_pred = np.argmax(model.forward(X), axis=1)
-    y_true = np.argmax(y, axis=1)
-    return np.mean(y_pred == y_true)
 
 
 class TwoLayerNeural:
@@ -152,6 +138,28 @@ class TwoLayerNeural:
 
         self.b[0] -= np.dot(biases, loss_grad_0)
         self.b[1] -= np.dot(biases, loss_grad_1)
+
+
+def train(
+        model: OneLayerNeural or TwoLayerNeural,
+        X: np.ndarray,
+        y: np.ndarray,
+        alpha: float,
+        batch_size: int = 100):
+    # Perform a single epoch of training
+    n = X.shape[0]
+    for i in range(0, n, batch_size):
+        model.backprop(X[i:i + batch_size], y[i:i + batch_size], alpha)
+
+
+def accuracy(
+        model: OneLayerNeural or TwoLayerNeural,
+        X: np.ndarray,
+        y: np.ndarray) -> ndarray:
+    # Calculate the accuracy of the model
+    y_pred = np.argmax(model.forward(X), axis=1)
+    y_true = np.argmax(y, axis=1)
+    return np.mean(y_pred == y_true)
 
 
 if __name__ == '__main__':
