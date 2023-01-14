@@ -16,7 +16,7 @@ def one_hot(data: np.ndarray) -> np.ndarray:
 
 
 def plot(loss_history: list, accuracy_history: list, filename='plot'):
-    # function to visualize learning process at stage 4
+    # Function to visualize learning process
 
     n_epochs = len(loss_history)
 
