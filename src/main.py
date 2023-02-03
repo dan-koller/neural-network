@@ -15,9 +15,8 @@ def one_hot(data: np.ndarray) -> np.ndarray:
     return y_train
 
 
-def plot(loss_history: list, accuracy_history: list, filename='plot'):
+def plot(loss_history: list, accuracy_history: list, filename: str = 'plot'):
     # Function to visualize learning process
-
     n_epochs = len(loss_history)
 
     plt.figure(figsize=(20, 10))
@@ -103,7 +102,7 @@ class OneLayerNeural:
 
 
 class TwoLayerNeural:
-    def __init__(self, n_features, n_classes):
+    def __init__(self, n_features: int, n_classes: int):
         # Size of the hidden layer (64 neurons)
         hidden_size = 64
 
@@ -112,14 +111,14 @@ class TwoLayerNeural:
                   xavier(hidden_size, n_classes)]
         self.b = [xavier(1, hidden_size), xavier(1, n_classes)]
 
-    def forward(self, X):
+    def forward(self, X: np.ndarray) -> np.ndarray:
         # Calculate feedforward step
         z = X
         for i in range(2):
             z = sigmoid(np.dot(z, self.W[i]) + self.b[i])
         return z
 
-    def backprop(self, X, y, alpha):
+    def backprop(self, X: np.ndarray, y: np.ndarray, alpha: float):
         n = X.shape[0]  # Number of trained samples
         biases = np.ones((1, n))  # Vector of ones for bias calculation
 
