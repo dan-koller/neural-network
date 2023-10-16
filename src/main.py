@@ -38,7 +38,7 @@ def plot(loss_history: list, accuracy_history: list, filename: str = 'plot'):
     plt.title('Accuracy on test dataframe from epoch')
     plt.grid()
 
-    plt.savefig(f'{filename}.png')
+    plt.savefig(f'data/{filename}.png')
 
 
 def scale(X_train: np.ndarray, X_test: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
@@ -166,27 +166,27 @@ def accuracy(
 
 if __name__ == '__main__':
 
-    if not os.path.exists('../Data'):
-        os.mkdir('../Data')
+    if not os.path.exists('data'):
+        os.mkdir('data')
 
     # Download data if it is unavailable.
-    if ('fashion-mnist_train.csv' not in os.listdir('../Data') and
-            'fashion-mnist_test.csv' not in os.listdir('../Data')):
+    if ('fashion-mnist_train.csv' not in os.listdir('data') and
+            'fashion-mnist_test.csv' not in os.listdir('data')):
         print('Train dataset loading.')
         url = "https://www.dropbox.com/s/5vg67ndkth17mvc/fashion-mnist_train.csv?dl=1"
         r = requests.get(url, allow_redirects=True)
-        open('../Data/fashion-mnist_train.csv', 'wb').write(r.content)
+        open('data/fashion-mnist_train.csv', 'wb').write(r.content)
         print('Loaded.')
 
         print('Test dataset loading.')
         url = "https://www.dropbox.com/s/9bj5a14unl5os6a/fashion-mnist_test.csv?dl=1"
         r = requests.get(url, allow_redirects=True)
-        open('../Data/fashion-mnist_test.csv', 'wb').write(r.content)
+        open('data/fashion-mnist_test.csv', 'wb').write(r.content)
         print('Loaded.')
 
     # Read train, test data.
-    raw_train = pd.read_csv('../Data/fashion-mnist_train.csv')
-    raw_test = pd.read_csv('../Data/fashion-mnist_test.csv')
+    raw_train = pd.read_csv('data/fashion-mnist_train.csv')
+    raw_test = pd.read_csv('data/fashion-mnist_test.csv')
 
     X_train = raw_train[raw_train.columns[1:]].values
     X_test = raw_test[raw_test.columns[1:]].values
@@ -203,10 +203,15 @@ if __name__ == '__main__':
     model = TwoLayerNeural(n_features, n_classes)
 
     # Train the model (20 epochs)
-    r1 = []
+    acc = []
+    loss = []
     for i in range(20):
         train(model, X_train, y_train, alpha=0.5)
-        r1.append(accuracy(model, X_train, y_train))
+        acc.append(accuracy(model, X_train, y_train))
+        loss.append(mse(model.forward(X_train), y_train))
 
     # Print the results
-    print(r1)
+    print(acc)
+
+    # Plot the results
+    # plot(loss, acc, filename='TwoLayerNeural')
