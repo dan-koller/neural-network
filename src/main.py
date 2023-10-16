@@ -215,4 +215,4 @@ if __name__ == '__main__':
     print(acc)
 
     # Plot the results
-    plot(loss, acc, filename=f'plot_{ep}epochs')
+    # plot(loss, acc, filename=f'plot_{ep}epochs')
