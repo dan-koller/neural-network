@@ -66,4 +66,4 @@ In the last stage, we put everything together and train our models with 20 epoch
 
 \*Alpha is the learning rate.
 
-_If you want to learn more about these functions and their mathematical background, you can find the documentation in the [Equations.md](docs/model/Equations.md) file._
+_If you want to learn more about these functions and their mathematical background, you can find the documentation in the [Equations.md](model/Equations.md) file._
