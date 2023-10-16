@@ -62,7 +62,7 @@ We have successfully built a two-layer neural network. Now it is time to impleme
 
 ## Stage 7 - Training and visualization with two layers
 
-In the last stage, we put everything together and train our models with 20 epochs, a batch size of 100, and an alpha\* of 0,5. We can use the `plot()` function to visualize the learning process.
+In the last stage, we put everything together and train our models with 20 epochs, a batch size of 100, and an α\* of 0,5. We can use the `plot()` function to visualize the learning process.
 
 \*Alpha is the learning rate.
 

@@ -2,7 +2,7 @@
 
 This document contains snippets of the code to explain the model and implementation.
 
-I will cover the methods in the same order as they are defined in the [code](src/main.py) to make it easier to follow.
+I will cover the methods in the same order as they are defined in the [code](../../src/main.py) to make it easier to follow.
 
 ## one_hot()
 
@@ -14,27 +14,27 @@ The plot() method is used to visualize the learning process of the neural networ
 
 ## scale()
 
-The scale() method is used to rescale the data to turn big numbers into small numbers. This is a good practice to do before training the neural network, since big numbers can cause problems during the training process. You can take a look on the underlying equation [here](docs/model/Equations.md#scale).
+The scale() method is used to rescale the data to turn big numbers into small numbers. This is a good practice to do before training the neural network, since big numbers can cause problems during the training process. You can take a look on the underlying equation [here](../model/Equations.md#scale).
 
 ## xavier()
 
-The xavier() method is used to initialize the weights of the neural network. You can take a look on the underlying equation [here](docs/model/Equations.md#xavier).
+The xavier() method is used to initialize the weights of the neural network. You can take a look on the underlying equation [here](../model/Equations.md#xavier).
 
 ## sigmoid()
 
-The sigmoid() method is used to calculate the output of the neural network. You can take a look on the underlying equation [here](docs/model/Equations.md#sigmoid).
+The sigmoid() method is used to calculate the output of the neural network. You can take a look on the underlying equation [here](../model/Equations.md#sigmoid).
 
 ## sigmoid_prime()
 
-The sigmoid_prime() method is used to calculate the gradient of the loss function. You can take a look on the underlying equation [here](docs/model/Equations.md#sigmoid-prime).
+The sigmoid_prime() method is used to calculate the gradient of the loss function. You can take a look on the underlying equation [here](../model/Equations.md#sigmoid-prime).
 
 ## mse()
 
-This method is used to calculate the loss of the neural network. You can take a look on the underlying equation [here](docs/model/Equations.md#mean-squared-error).
+This method is used to calculate the loss of the neural network. You can take a look on the underlying equation [here](../model/Equations.md#mean-squared-error).
 
 ## mse_prime()
 
-This method is used to calculate the gradient of the loss function. You can take a look on the underlying equation [here](docs/model/Equations.md#mean-squared-error-prime).
+This method is used to calculate the gradient of the loss function. You can take a look on the underlying equation [here](../model/Equations.md#mean-squared-error-prime).
 
 ## class OneLayerNeural
 
@@ -125,7 +125,7 @@ At first we get the size of the data (n). Then we iterate over the data in batch
 
 ## accuracy()
 
-The accuracy() method is used to calculate the accuracy of the neural network using the equation from the [documentation](docs/model/Equations.md#accuracy).
+The accuracy() method is used to calculate the accuracy of the neural network using the equation from the [documentation](../model/Equations.md#accuracy).
 
 ## main()
 
