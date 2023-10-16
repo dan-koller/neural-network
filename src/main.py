@@ -202,10 +202,11 @@ if __name__ == '__main__':
     # Create a class instance and train it
     model = TwoLayerNeural(n_features, n_classes)
 
-    # Train the model (20 epochs)
+    # Train the model
+    ep = 20 # Number of epochs
     acc = []
     loss = []
-    for i in range(20):
+    for i in range(ep):
         train(model, X_train, y_train, alpha=0.5)
         acc.append(accuracy(model, X_train, y_train))
         loss.append(mse(model.forward(X_train), y_train))
@@ -214,4 +215,4 @@ if __name__ == '__main__':
     print(acc)
 
     # Plot the results
-    # plot(loss, acc, filename='TwoLayerNeural')
+    plot(loss, acc, filename=f'plot_{ep}epochs')
